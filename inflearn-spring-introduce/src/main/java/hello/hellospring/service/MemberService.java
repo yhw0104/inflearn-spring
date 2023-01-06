@@ -28,10 +28,19 @@ public class MemberService {
 //        });
 //        --> memberRepository.findByName(member.getName()); 자체가 Optional로 감싸져서 나오기 때문에 result를 사용안해도 된다.
 
+        Long start = System.currentTimeMillis();
 
-        validateDuplicateMember(member);    // 중복 회원 검증 메서드
-        memberRepository.save(member);
-        return member.getId();
+        try {
+            validateDuplicateMember(member);    // 중복 회원 검증 메서드
+            memberRepository.save(member);
+            return member.getId();
+        } finally {
+            Long finish = System.currentTimeMillis();
+            Long timeMs = finish - start;
+            System.out.println("join = " + timeMs + "ms");
+        }
+
+
     }
 
     private void validateDuplicateMember(Member member) {
@@ -43,7 +52,15 @@ public class MemberService {
 
     // 전체 회원 조회
     public List<Member> findMembers() {
-        return memberRepository.findAll();
+        Long start = System.currentTimeMillis();
+        try {
+            return memberRepository.findAll();
+        } finally {
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
+            System.out.println("findMembers = " + timeMs + "ms");
+        }
+
     }
 
     public Optional<Member> findOne(Long memberId) {
