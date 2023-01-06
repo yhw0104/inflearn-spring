@@ -28,15 +28,15 @@ public class MemberService {
 //        });
 //        --> memberRepository.findByName(member.getName()); 자체가 Optional로 감싸져서 나오기 때문에 result를 사용안해도 된다.
 
-        Long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
 
         try {
             validateDuplicateMember(member);    // 중복 회원 검증 메서드
             memberRepository.save(member);
             return member.getId();
         } finally {
-            Long finish = System.currentTimeMillis();
-            Long timeMs = finish - start;
+            long finish = System.currentTimeMillis();
+            long timeMs = finish - start;
             System.out.println("join = " + timeMs + "ms");
         }
 
@@ -52,7 +52,7 @@ public class MemberService {
 
     // 전체 회원 조회
     public List<Member> findMembers() {
-        Long start = System.currentTimeMillis();
+        long start = System.currentTimeMillis();
         try {
             return memberRepository.findAll();
         } finally {
