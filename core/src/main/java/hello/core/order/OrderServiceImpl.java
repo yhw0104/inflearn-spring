@@ -18,8 +18,13 @@ public class OrderServiceImpl implements  OrderService{
 
     @Autowired
     public OrderServiceImpl(MemberRepository memberRepository, DiscountPolicy discountPolicy) {
+
+        //memberRepository와 discountPolicy가 의존하는 구현체에가 들어간다. memberRepository --> memoryMemberRepository , discountPolicy --> RateDiscountPolicy
         this.memberRepository = memberRepository;
+        System.out.println("memberRepository = " + memberRepository);
         this.discountPolicy = discountPolicy;
+        System.out.println("discountPolicy = " + discountPolicy);
+
     }
 
     @Override
