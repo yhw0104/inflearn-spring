@@ -3,7 +3,10 @@ package hello.core.lifecycle;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
 
-public class NetworkClient implements InitializingBean, DisposableBean {
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+
+public class NetworkClient /*implements InitializingBean, DisposableBean*/ {
 
     private String url;
 
@@ -31,18 +34,31 @@ public class NetworkClient implements InitializingBean, DisposableBean {
     }
 
 
-    //의존 주입 다 끝나고 실행됨
-    @Override
-    public void afterPropertiesSet() throws Exception {
-        System.out.println("NetworkClient.afterPropertiesSet");
+    @PostConstruct  //어노테이션을 활용한 의존 주입이후 초기화
+    //의존 주입 다 끝나고 실행됨(@Bean에 붙는 initMethod)
+    public void init() {
+        System.out.println("NetworkClient.init");
         connect();
         call("초기화 연결 메세지");
     }
 
-    //서비스 종료시 실행
-    @Override
-    public void destroy() throws Exception {
-        System.out.println("NetworkClient.destroy");
+    @PreDestroy     //어노테이션을 활용한 종료시 초기화
+    //서비스 종료시 실행(@Bean에 붙는 destroyMethod)
+    public void close() {
+        System.out.println("NetworkClient.close");
         disconnect();
     }
+
+//    //의존 주입 다 끝나고 실행됨(InitializingBean 인터페이스 오버라이드)
+//    @Override
+//    public void destroy() throws Exception {
+//        disconnect();
+//    }
+//
+//    //서비스 종료시 실행(DisposableBean 인터페이스 오버라이드)
+//    @Override
+//    public void afterPropertiesSet() throws Exception {
+//        connect();
+//        call("초기화 연결 메시지");
+//    }
 }
