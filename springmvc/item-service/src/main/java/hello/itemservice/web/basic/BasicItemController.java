@@ -88,7 +88,7 @@ public class BasicItemController {
         return "basic/item";
     }
 
-//    @PostMapping("/add")
+    @PostMapping("/add")
     public String addItemV5(Item item) {
 
         // modelattribute의 이름을 생략하면 해당 클래스의 앞글자를 소문자로 바꾸어 만듬 ex) Item -> item, HelloData -> helloData
@@ -96,21 +96,21 @@ public class BasicItemController {
 
 //        model.addAttribute("item", item);
 //        modelattribute에서 자동 추가, 생략 가능
-        return "redirect:/basic/item" + item.getId();
+        return "redirect:/basic/items/" + item.getId();
     }
 
-    @PostMapping("/add")
-    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
-
-        // modelattribute의 이름을 생략하면 해당 클래스의 앞글자를 소문자로 바꾸어 만듬 ex) Item -> item, HelloData -> helloData
-        Item savedItem = itemRepository.save(item);
-        redirectAttributes.addAttribute("itemId", savedItem.getId());
-        redirectAttributes.addAttribute("status", true);
-
-//        model.addAttribute("item", item);
-//        modelattribute에서 자동 추가, 생략 가능
-        return "redirect:/basic/item/{itemId}";
-    }
+//    @PostMapping("/add")
+//    public String addItemV6(Item item, RedirectAttributes redirectAttributes) {
+//
+//        // modelattribute의 이름을 생략하면 해당 클래스의 앞글자를 소문자로 바꾸어 만듬 ex) Item -> item, HelloData -> helloData
+//        Item savedItem = itemRepository.save(item);
+//        redirectAttributes.addAttribute("itemId", savedItem.getId());
+//        redirectAttributes.addAttribute("status", true);
+//
+////        model.addAttribute("item", item);
+////        modelattribute에서 자동 추가, 생략 가능
+//        return "redirect:/basic/item/{itemId}";
+//    }
 
     @GetMapping("/{itemId}/edit")
     public String editForm(@PathVariable("itemId") Long itemId, Model model){
